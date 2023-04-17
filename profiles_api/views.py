@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 
 from . import serializers
 from . import models
@@ -126,57 +128,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email')
     
-    # def list(self, request):
-    #     """Return all users"""
-        
-        
-    #     a_viewset = [
-    #         'Uses actions: list, create, retrieve, update, partially_update and destroy',
-    #         'Automatically maps to URLs using Routers',
-    #         'Provides more functionality with less code'
-    #     ]
-        
-    #     return Response({
-    #         'message': f'Hello {User.get_email_field_name}',
-    #         'a_viewset': a_viewset,
-    #         'status': status.HTTP_200_OK
-    #     })
-        
-    # def create(self, request):
-    #     """Create a new hello message"""
-        
-    #     serializer = self.serializer_class(data=request.data)
-        
-    #     if serializer.is_valid():
-    #         name = serializer.validated_data.get('name')
-    #         message = f'Hello {name}'
-            
-    #         return Response({
-    #             'status': status.HTTP_200_OK,
-    #             'message': message
-    #         })
-    #     return Response(
-    #         serializer.errors,
-    #         status=status.HTTP_400_BAD_REQUEST,
-    #     )
+class UserLoginApiView(ObtainAuthToken):
+    """Handle creating user authentication tokens"""
     
-    # def retrieve(self, request, pk=None):
-    #     """Handle getting an object by its ID"""
-        
-    #     return Response({'http_method': 'GET'})
-    
-    # def update(self, request, pk=None):
-    #     """Handle updating an object by its ID"""
-        
-    #     return Response({'http_method': 'PUT'})
-    
-    # def partial_update(self, request, pk=None):
-    #     """Handle partially updating an object by its ID"""
-        
-    #     return Response({'http_method': 'PATCH'})
-    
-    # def destroy(self, request, pk=None):
-    #     """Handle deleting an object by its ID"""
-        
-    #     return Response({'http_method': 'DELETE'})
-    
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
